@@ -24,7 +24,7 @@ export const Header = () => {
 
 const styles = StyleSheet.create({
     container: {
-      backgroundColor: 'black',
+      backgroundColor: 'rgb(173,58,16)',
       alignItems: "center",
       justifyContent: "space-between",
       width: "100%",
@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
     title: {
         color: "white",
         fontSize: 30,
-        textShadowColor: "white",
+        textShadowColor: "black",
         textShadowRadius: 15,
     },
     text: {
