@@ -1,21 +1,30 @@
 import React from 'react'
-import { View, Text, StyleSheet } from 'react-native'
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
 import { AntDesign } from '@expo/vector-icons';
+import {useNavigation} from '@react-navigation/native'
+
 
 export const Header = () => {
+
+    const navigation = useNavigation()
+
+
     return (
         <View style={styles.container}>
             <Text style={styles.title}>
             GαɱҽSƚσɾҽ
             </Text>
+
+            <TouchableOpacity onPress={() => navigation.navigate("CartPage")}>
             <View style={styles.cartContainer}>
                 <View>
                     <Text style={styles.text}>Meu carrinho</Text>
                     <Text style={styles.textAmount}>0 itens</Text>
                 </View>
 
-                <AntDesign name="shoppingcart" size={40} color="white" />
+                <AntDesign  name="shoppingcart" size={40} color="white" />
             </View>
+            </TouchableOpacity>
 
         </View>
     )
@@ -42,6 +51,7 @@ const styles = StyleSheet.create({
     text: {
         color: "white",
         fontSize: 18,
+        marginRight: 5,
     },
     cartContainer: {
         flexDirection: "row",

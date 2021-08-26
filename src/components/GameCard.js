@@ -1,36 +1,87 @@
 import React from 'react'
-import {ScrollView, Text, StyleSheet, View} from "react-native"
+import {ScrollView, Text, StyleSheet, View, FlatList, Image, TouchableOpacity} from "react-native"
+import { FontAwesome } from '@expo/vector-icons';
 
-export const GameCard = ({data}) => {
+
+export const GameCard = ({item}) => {
+
 
     return (
-        <ScrollView style={styles.container}>
-            {data.map((res, i) => 
-            <View style={styles.cardContainer}>
-                <Text style={{color: "black"}}>asdsd</Text>
+    <>
+        <View style={styles.container}>
+        <View>
+
+            <Image alignSelf={"center"} source={item.image}/>
+                <Text style={styles.gameName}>{item.name}</Text> 
+                <Text style={styles.gamePrice}>R$ {item.price}</Text>
+                <TouchableOpacity  style={styles.btn}>
+                    <View style={{flexDirection: "row"}}>
+                    <FontAwesome onpr style={{paddingLeft: 10}} name="cart-plus" size={24} color="white" />
+                    <Text style={styles.textAmmount}>0</Text>
+                    </View>
+                    <Text style={styles.textBtn}>ADICIONAR AO CARRINHO</Text>
+                </TouchableOpacity>
             </View>
-            )}
-            
-        </ScrollView>
+        </View>
+        </>
     )
 }
 
 const styles = StyleSheet.create({
 
     container: {
-        backgroundColor: "#FFF",
+        flexDirection: "column",
+        borderRadius: 15,
+        justifyContent: "center",
+        height: 400,
+        backgroundColor: "white",
+        marginTop: 20,
+        width: 300,
         padding: 20,
-        borderRadius: 10,
-        flexDirection: 'column',
-        width: 200,
-
+        marginBottom: 30,
 
     },
     cardContainer: {
-        paddingBottom: 20,
-        height: 150,
+        flexDirection: "row",
+        width: "100%",
+        alignItems: "center",
+        justifyContent: "space-between",
+    },
+    btn: {
+        backgroundColor: "rgb(173,58,16)",
+        color: "#fff",
+        borderRadius: 10,
         marginTop: 20,
-        width: "100%"
+        alignItems: "center",
+        height: 50,
+        flexDirection: "row",
+        justifyContent: "space-between"
+    },
+    textBtn: {
+        color: "#fff",
+        fontWeight: "bold",
+        alignSelf: "center",
+        paddingRight: 10,
+    },
+    textAmmount: {
+        color: "#fff",
+        paddingLeft: 10,
+        paddingTop: 2,
+        fontSize: 18,
+
+    },
+    gameName: {
+        color: "black",
+        fontSize: 21,
+        marginTop: 10
+
+    },
+    gamePrice: {
+        fontWeight: 'bold',
+        color: "black",
+        fontSize: 21,
+        marginTop: 10
+
     }
 
 })
