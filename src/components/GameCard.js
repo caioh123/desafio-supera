@@ -1,29 +1,52 @@
 import React, {useState, useEffect} from 'react'
 import {ScrollView, Text, StyleSheet, View, FlatList, Image, TouchableOpacity} from "react-native"
 import { FontAwesome } from '@expo/vector-icons';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 export const GameCard = ({item}) => {
 
-    const [handleToCart, setHandleToCart] = useState([])
+    const [cartItems, setCartItems] = useState([])
 
-    const onHandleToCart = () => {
-    
-        setHandleToCart(item)
-
-        
-    }
+    console.log([cartItems].map(a => a.id))
 
     useEffect(() => {
-        onHandleToCart()
-        console.log(handleToCart.length)
+         const setLocal = async () => {
+             await AsyncStorage.setItem("game", JSON.stringify(cartItems))
 
-    }, [handleToCart])
+        }
+
+        setLocal()
+      }, [cartItems]);
+
+      useEffect(() => {
+        const getData = async () => {
+            try {
+                await setCartItems(JSON.parse(AsyncStorage.getItem("game")) || []);
+            } catch(e) {
+            // error reading value
+            }
+        }
+        
+         getData()
+      }, [])
 
 
+
+
+
+    const onAdd = () => {
+        const exist = cartItems.find(x => x.id === product.id)
+
+
+
+        // if(exist) {
+        //     setCartItems(cartItems.map(x => x.id === product.id ? {...exist, qty: exist.qty + 1} : x))
+        // } else {
+        //     setCartItems([...cartItems, {...product, qty: 1}])
+        // }
+    }
     
-
-
 
     return (
     <>
@@ -33,7 +56,7 @@ export const GameCard = ({item}) => {
             <Image alignSelf={"center"} source={item.image}/>
                 <Text style={styles.gameName}>{item.name}</Text> 
                 <Text style={styles.gamePrice}>R$ {item.price}</Text>
-                <TouchableOpacity onPress={onHandleToCart}  style={styles.btn}>
+                <TouchableOpacity onPress={onAdd} style={styles.btn}>
                     <View style={{flexDirection: "row"}}>
                     <FontAwesome onpr style={{paddingLeft: 10}} name="cart-plus" size={24} color="white" />
                     <Text style={styles.textAmmount}>0</Text>

@@ -8,6 +8,7 @@ import { CartGameCard } from '../components/CartCameCard';
 
 
 export const CartPage = () => {
+    
 
     const navigation = useNavigation()
 

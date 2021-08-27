@@ -2,21 +2,25 @@ import React from 'react'
 import {View, Text, StyleSheet, TextInput, Image, FlatList} from 'react-native'
 import { GameCard } from '../components/GameCard'
 import {Header} from '../components/Header'
-import { data } from '../products'
+import { useGames } from '../context/context'
 
 export const HomePage = ({navigation}) => {
+
+
+    const {games} = useGames()
+
     return (
     <>
         <Header />
         <View style={styles.container}>
             <View style={styles.inputContainer}>
             
-            <TextInput textAlign={"center"} placeholder="Buscar seu jogo favorito" style={styles.input}>Procure o seu game favorito</TextInput>
+            <TextInput textAlign={"center"} placeholder="Buscar seu jogo favorito" style={styles.input} />
             </View>
             <View>
 
             <FlatList 
-                data={data}
+                data={games}
                 keyExtractor={item => item.id}
                 renderItem={({item}) => (
                     <GameCard item={item}/>
