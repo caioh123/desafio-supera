@@ -1,9 +1,10 @@
 import React from 'react'
-import { Text, View, StyleSheet, Image, TextInput, TouchableOpacity } from 'react-native'
+import { Text, View, StyleSheet, Image, TextInput, TouchableOpacity, ScrollView } from 'react-native'
 import { Header } from '../components/Header'
 import { Ionicons, EvilIcons, AntDesign } from '@expo/vector-icons';
 import {data} from '../products'
 import {useNavigation} from '@react-navigation/native'
+import { CartGameCard } from '../components/CartCameCard';
 
 
 export const CartPage = () => {
@@ -25,18 +26,10 @@ export const CartPage = () => {
                         <Text style={styles.cardDescText}>Produto</Text>
                         <Text style={styles.cardDescText}>QTD</Text>
                     </View>
-                    <View style={styles.cardMain}>
-                        <Image style={styles.gameImg} source={data[4].image} />
-                        <View style={styles.gameContainer} alignItems={"center"}>
-                            <Text style={styles.gameName}>{data[0].name}</Text>
-                            <Text style={styles.gamePrice}>R$ {data[0].price}</Text>
-                        </View>
-                        <View style={styles.cardQty}>
-                            <AntDesign name="minuscircleo" size={20} color="rgb(173,58,16)" />
-                            <Text style={{fontSize: 20, paddingLeft: 5}}>1</Text>
-                            <EvilIcons name="plus" size={30} color="rgb(173,58,16)" />
-                        </View>
-                    </View>
+                    <ScrollView>
+                    <CartGameCard data={data} />
+                    </ScrollView>
+
                     <View style={styles.priceContainer}>
                         <Text style={styles.priceDesc}>FRETE</Text>
                         <Text style={styles.priceDesc}>TOTAL</Text>
@@ -46,7 +39,7 @@ export const CartPage = () => {
                         <Text style={styles.priceVal}>R$ {data[0].price}</Text>
                     </View>
                     <TouchableOpacity style={styles.btn}>
-                        <Text style={styles.textBtn}>ADICIONAR AO CARRINHO</Text>
+                        <Text style={styles.textBtn}>FINALIZAR COMPRA</Text>
                     </TouchableOpacity>
             </View>
         </View>
@@ -63,7 +56,7 @@ const styles = StyleSheet.create({
     cardContainer: {
         flexDirection: "column",
         borderRadius: 15,
-        height: 400,
+        height: "80%",
         backgroundColor: "white",
         marginTop: 20,
         width: 350,
@@ -96,7 +89,8 @@ const styles = StyleSheet.create({
         height: 150,
         borderBottomColor: "rgb(80,80,80)",
         paddingBottom: 40,
-        borderBottomWidth: 2
+        borderBottomWidth: 2,
+
     },
     gameImg: {
         width: 60,
@@ -118,6 +112,7 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         color: "black",
         fontSize: 16,
+
 
     },
     priceContainer: {

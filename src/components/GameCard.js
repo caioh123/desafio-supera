@@ -1,9 +1,28 @@
-import React from 'react'
+import React, {useState, useEffect} from 'react'
 import {ScrollView, Text, StyleSheet, View, FlatList, Image, TouchableOpacity} from "react-native"
 import { FontAwesome } from '@expo/vector-icons';
 
 
 export const GameCard = ({item}) => {
+
+    const [handleToCart, setHandleToCart] = useState([])
+
+    const onHandleToCart = () => {
+    
+        setHandleToCart(item)
+
+        
+    }
+
+    useEffect(() => {
+        onHandleToCart()
+        console.log(handleToCart.length)
+
+    }, [handleToCart])
+
+
+    
+
 
 
     return (
@@ -14,7 +33,7 @@ export const GameCard = ({item}) => {
             <Image alignSelf={"center"} source={item.image}/>
                 <Text style={styles.gameName}>{item.name}</Text> 
                 <Text style={styles.gamePrice}>R$ {item.price}</Text>
-                <TouchableOpacity  style={styles.btn}>
+                <TouchableOpacity onPress={onHandleToCart}  style={styles.btn}>
                     <View style={{flexDirection: "row"}}>
                     <FontAwesome onpr style={{paddingLeft: 10}} name="cart-plus" size={24} color="white" />
                     <Text style={styles.textAmmount}>0</Text>
