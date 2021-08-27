@@ -2,17 +2,21 @@ import React from 'react'
 import { View, Text, StyleSheet, Image } from 'react-native'
 import { Ionicons, EvilIcons, AntDesign } from '@expo/vector-icons';
 
-export const CartGameCard = ({data}) => {
+
+
+export const CartGameCard = ({product, data}) => {
+
+    console.log(product)
     return (
         <View style={styles.cardMain}>
-        <Image style={styles.gameImg} source={data[4].image} />
+        <Image style={styles.gameImg} source={product.image} />
         <View style={styles.gameContainer} alignItems={"center"}>
-            <Text style={styles.gameName}>{data[0].name}</Text>
-            <Text style={styles.gamePrice}>R$ {data[0].price}</Text>
+            <Text numberOfLines={2} style={styles.gameName}>{product.name}</Text>
+            <Text style={styles.gamePrice}>R$ {product.price}</Text>
         </View>
         <View style={styles.cardQty}>
             <AntDesign name="minuscircleo" size={20} color="rgb(173,58,16)" />
-            <Text style={{fontSize: 20, paddingLeft: 5}}>1</Text>
+            <Text style={{fontSize: 20, paddingLeft: 5}}>{product.qty}</Text>
             <EvilIcons name="plus" size={30} color="rgb(173,58,16)" />
         </View>
     </View>
@@ -38,14 +42,16 @@ const styles = StyleSheet.create({
     },
     cardQty: {
         flexDirection: 'row',
-        width: 70,
+        width: 65,
         alignItems: "center",
         justifyContent: "space-between",
         paddingLeft: 5,
     },
     gameName: {
         color: "black",
-        fontSize: 16,
+        fontSize: 15,
+        height: 30,
+        maxWidth: 300
 
     },
     gamePrice: {

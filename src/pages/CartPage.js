@@ -1,13 +1,17 @@
 import React from 'react'
-import { Text, View, StyleSheet, Image, TextInput, TouchableOpacity, ScrollView } from 'react-native'
+import { Text, View, StyleSheet, Image, TextInput, TouchableOpacity, FlatList } from 'react-native'
 import { Header } from '../components/Header'
 import { Ionicons, EvilIcons, AntDesign } from '@expo/vector-icons';
 import {data} from '../products'
 import {useNavigation} from '@react-navigation/native'
 import { CartGameCard } from '../components/CartCameCard';
+import { useCart } from '../context/cartContext';
 
 
 export const CartPage = () => {
+
+    const {cart} = useCart()
+
     
 
     const navigation = useNavigation()
@@ -27,9 +31,14 @@ export const CartPage = () => {
                         <Text style={styles.cardDescText}>Produto</Text>
                         <Text style={styles.cardDescText}>QTD</Text>
                     </View>
-                    <ScrollView>
-                    <CartGameCard data={data} />
-                    </ScrollView>
+                    <FlatList 
+                data={cart}
+                keyExtractor={item => item.id}
+                renderItem={({item}) => (
+                    <CartGameCard product={item}/>
+
+            )}
+            />
 
                     <View style={styles.priceContainer}>
                         <Text style={styles.priceDesc}>FRETE</Text>
@@ -37,7 +46,7 @@ export const CartPage = () => {
                     </View>
                     <View style={styles.priceContainer}>
                         <Text style={styles.priceVal}>R$ 50,00</Text>
-                        <Text style={styles.priceVal}>R$ {data[0].price}</Text>
+                        <Text style={styles.priceVal}>R$ {cart.price}</Text>
                     </View>
                     <TouchableOpacity style={styles.btn}>
                         <Text style={styles.textBtn}>FINALIZAR COMPRA</Text>

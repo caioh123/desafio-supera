@@ -2,7 +2,7 @@ import React from 'react'
 import {View, Text, StyleSheet, TextInput, Image, FlatList} from 'react-native'
 import { GameCard } from '../components/GameCard'
 import {Header} from '../components/Header'
-import { useGames } from '../context/context'
+import { useGames } from '../context/gameContext'
 
 export const HomePage = ({navigation}) => {
 

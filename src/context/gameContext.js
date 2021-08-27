@@ -3,6 +3,8 @@ import { data } from '../products'
 
 export const GameContext = createContext({})
 
+export const CartContext = createContext([])
+
 export const GamesProvider = (props) => {
     const [games, setGames] = useState([])
 
