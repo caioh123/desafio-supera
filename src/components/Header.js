@@ -19,7 +19,6 @@ export const Header = () => {
             <View style={styles.cartContainer}>
                 <View>
                     <Text style={styles.text}>Meu carrinho</Text>
-                    <Text style={styles.textAmount}>0 itens</Text>
                 </View>
 
                 <AntDesign  name="shoppingcart" size={40} color="white" />

@@ -12,7 +12,11 @@ export const CartPage = () => {
 
     const {cart} = useCart()
 
-    
+    const itemsPrice = cart.reduce((acc, curr) => acc + curr.qty * curr.price, 0)
+
+    const taxPrice = itemsPrice >= 250 ? 0 : cart.length * 10
+
+    const totalPrice = itemsPrice + taxPrice
 
     const navigation = useNavigation()
 
@@ -35,7 +39,7 @@ export const CartPage = () => {
                 data={cart}
                 keyExtractor={item => item.id}
                 renderItem={({item}) => (
-                    <CartGameCard product={item}/>
+                    <CartGameCard itemsPrice={itemsPrice} product={item}/>
 
             )}
             />
@@ -45,8 +49,8 @@ export const CartPage = () => {
                         <Text style={styles.priceDesc}>TOTAL</Text>
                     </View>
                     <View style={styles.priceContainer}>
-                        <Text style={styles.priceVal}>R$ 50,00</Text>
-                        <Text style={styles.priceVal}>R$ {cart.price}</Text>
+                        <Text style={styles.priceVal}>R$ {taxPrice.toFixed(2)}</Text>
+                        <Text style={styles.priceVal}>R$ {totalPrice.toFixed(2)}</Text>
                     </View>
                     <TouchableOpacity style={styles.btn}>
                         <Text style={styles.textBtn}>FINALIZAR COMPRA</Text>

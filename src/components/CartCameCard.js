@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, Image } from 'react-native'
 import { Ionicons, EvilIcons, AntDesign } from '@expo/vector-icons';
 import { useCart } from '../context/cartContext';
 
-export const CartGameCard = ({product, data}) => {
+export const CartGameCard = ({product, data, itemsPrice}) => {
 
 
     const {cart, setCart, onAdd} = useCart()
@@ -27,7 +27,7 @@ export const CartGameCard = ({product, data}) => {
         <Image style={styles.gameImg} source={product.image} />
         <View style={styles.gameContainer} alignItems={"center"}>
             <Text numberOfLines={2} style={styles.gameName}>{product.name}</Text>
-            <Text style={styles.gamePrice}>R$ {product.price}</Text>
+            <Text style={styles.gamePrice}>R$ {itemsPrice}</Text>
         </View>
         <View style={styles.cardQty}>
             <AntDesign onPress={() => onRemove(product)} name="minuscircleo" size={20} color="rgb(173,58,16)" />
