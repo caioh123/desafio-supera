@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react'
-import {ScrollView, Text, StyleSheet, View, FlatList, Image, TouchableOpacity} from "react-native"
+import {ScrollView, Text, StyleSheet, View, Image, TouchableOpacity} from "react-native"
 import { FontAwesome } from '@expo/vector-icons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useCart } from '../context/cartContext';
@@ -9,25 +9,7 @@ export const GameCard = ({item}) => {
 
     const {cart, setCart, onAdd} = useCart()
 
-    // const onAdd = (product) => {
-    //     const productInCart = cart.find(cartItem => cartItem.id === product.id)
 
-
-    //     if(productInCart) {
-    //         const game = cart.map((cartItem) => {
-    //             if(cartItem.id === productInCart.id) {
-    //                 console.log(productInCart)
-    //                 productInCart.qty += 1
-    //             } 
-    //             return productInCart
-    //         })
-
-    //         setCart(game)
-    //     } else {
-    //         setCart([...cart, {...product, qty: 1}])
-        
-    //     }
-    // }
 
 
 

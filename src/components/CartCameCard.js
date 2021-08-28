@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import { View, Text, StyleSheet, Image } from 'react-native'
 import { Ionicons, EvilIcons, AntDesign } from '@expo/vector-icons';
 import { useCart } from '../context/cartContext';
@@ -8,12 +8,12 @@ export const CartGameCard = ({product, data, itemsPrice}) => {
 
     const {cart, setCart, onAdd} = useCart()
 
-    
-    
+    const subTotal = product.qty * product.price
+
+
     const onRemove = (product) => {
         
         const productInCart = cart.find((cartItem) => cartItem.id === product.id)
-        console.log(productInCart)
 
         if(productInCart.qty === 1) {
             setCart(cart.filter((game) => game.id !== product.id) )
@@ -27,7 +27,7 @@ export const CartGameCard = ({product, data, itemsPrice}) => {
         <Image style={styles.gameImg} source={product.image} />
         <View style={styles.gameContainer} alignItems={"center"}>
             <Text numberOfLines={2} style={styles.gameName}>{product.name}</Text>
-            <Text style={styles.gamePrice}>R$ {itemsPrice}</Text>
+            <Text style={styles.gamePrice}>R$ {subTotal}</Text>
         </View>
         <View style={styles.cardQty}>
             <AntDesign onPress={() => onRemove(product)} name="minuscircleo" size={20} color="rgb(173,58,16)" />

@@ -10,6 +10,7 @@ import { useCart } from '../context/cartContext';
 
 export const CartPage = () => {
 
+
     const {cart} = useCart()
 
     const itemsPrice = cart.reduce((acc, curr) => acc + curr.qty * curr.price, 0)
@@ -19,6 +20,7 @@ export const CartPage = () => {
     const totalPrice = itemsPrice + taxPrice
 
     const navigation = useNavigation()
+
 
 
     return (
@@ -37,9 +39,9 @@ export const CartPage = () => {
                     </View>
                     <FlatList 
                 data={cart}
-                keyExtractor={item => item.id}
+                keyExtractor={item => String(item.id)}
                 renderItem={({item}) => (
-                    <CartGameCard itemsPrice={itemsPrice} product={item}/>
+                    <CartGameCard  itemsPrice={itemsPrice} product={item}/>
 
             )}
             />

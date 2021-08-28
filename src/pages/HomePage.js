@@ -21,7 +21,7 @@ export const HomePage = ({navigation}) => {
 
             <FlatList 
                 data={games}
-                keyExtractor={item => item.id}
+                keyExtractor={item => String(item.id)}                
                 renderItem={({item}) => (
                     <GameCard item={item}/>
 
