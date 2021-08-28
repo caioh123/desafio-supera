@@ -1,12 +1,27 @@
 import React from 'react'
 import { View, Text, StyleSheet, Image } from 'react-native'
 import { Ionicons, EvilIcons, AntDesign } from '@expo/vector-icons';
-
-
+import { useCart } from '../context/cartContext';
 
 export const CartGameCard = ({product, data}) => {
 
-    console.log(product)
+
+    const {cart, setCart} = useCart()
+
+    
+    
+    const onRemove = (product) => {
+        
+        const productInCart = cart.find((cartItem) => cartItem.id === product.id)
+        console.log(productInCart)
+
+        if(productInCart.qty === 1) {
+            setCart(cart.filter((game) => game.id !== product.id) )
+        } else {
+            setCart(cart.map((game) => game.id === product.id ? {...productInCart, qty: productInCart.qty - 1} : game))
+        }
+    }
+
     return (
         <View style={styles.cardMain}>
         <Image style={styles.gameImg} source={product.image} />
@@ -15,7 +30,7 @@ export const CartGameCard = ({product, data}) => {
             <Text style={styles.gamePrice}>R$ {product.price}</Text>
         </View>
         <View style={styles.cardQty}>
-            <AntDesign name="minuscircleo" size={20} color="rgb(173,58,16)" />
+            <AntDesign onPress={() => onRemove(product)} name="minuscircleo" size={20} color="rgb(173,58,16)" />
             <Text style={{fontSize: 20, paddingLeft: 5}}>{product.qty}</Text>
             <EvilIcons name="plus" size={30} color="rgb(173,58,16)" />
         </View>

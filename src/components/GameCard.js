@@ -14,7 +14,7 @@ export const GameCard = ({item}) => {
 
 
         if(productInCart) {
-            const test = cart.map((cartItem) => {
+            const game = cart.map((cartItem) => {
                 if(cartItem.id === productInCart.id) {
                     console.log(productInCart)
                     productInCart.qty += 1
@@ -22,12 +22,13 @@ export const GameCard = ({item}) => {
                 return productInCart
             })
 
-            setCart(test)
+            setCart(game)
         } else {
             setCart([...cart, {...product, qty: 1}])
         
         }
     }
+
 
 
     const productQty = (product) => {
@@ -49,7 +50,7 @@ export const GameCard = ({item}) => {
         <View style={styles.container}>
         <View>
 
-            <Image alignSelf={"center"} source={item.image}/>
+            <Image onpr alignSelf={"center"} source={item.image}/>
                 <Text style={styles.gameName}>{item.name}</Text> 
                 <Text style={styles.gamePrice}>R$ {item.price}</Text>
                 <TouchableOpacity onPress={() => onAdd(item)} style={styles.btn}>
