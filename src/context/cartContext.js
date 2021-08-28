@@ -6,9 +6,29 @@ export const CartContext = createContext([])
 export const CartProvider = (props) => {
     const [cart, setCart] = useState([])
 
+    const onAdd = (product) => {
+        const productInCart = cart.find(cartItem => cartItem.id === product.id)
+
+
+        if(productInCart) {
+            const game = cart.map((cartItem) => {
+                if(cartItem.id === productInCart.id) {
+                    console.log(productInCart)
+                    productInCart.qty += 1
+                } 
+                return productInCart
+            })
+
+            setCart(game)
+        } else {
+            setCart([...cart, {...product, qty: 1}])
+        
+        }
+    }
+
 
     return (
-        <CartContext.Provider value={{cart, setCart}}>
+        <CartContext.Provider value={{cart, setCart, onAdd}}>
             {props.children}
         </CartContext.Provider>
     )

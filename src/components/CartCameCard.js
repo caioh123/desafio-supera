@@ -6,7 +6,7 @@ import { useCart } from '../context/cartContext';
 export const CartGameCard = ({product, data}) => {
 
 
-    const {cart, setCart} = useCart()
+    const {cart, setCart, onAdd} = useCart()
 
     
     
@@ -32,7 +32,7 @@ export const CartGameCard = ({product, data}) => {
         <View style={styles.cardQty}>
             <AntDesign onPress={() => onRemove(product)} name="minuscircleo" size={20} color="rgb(173,58,16)" />
             <Text style={{fontSize: 20, paddingLeft: 5}}>{product.qty}</Text>
-            <EvilIcons name="plus" size={30} color="rgb(173,58,16)" />
+            <EvilIcons onPress={() => onAdd(product)} name="plus" size={30} color="rgb(173,58,16)" />
         </View>
     </View>
     )

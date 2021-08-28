@@ -7,27 +7,27 @@ import { useCart } from '../context/cartContext';
 
 export const GameCard = ({item}) => {
 
-    const {cart, setCart} = useCart()
+    const {cart, setCart, onAdd} = useCart()
 
-    const onAdd = (product) => {
-        const productInCart = cart.find(cartItem => cartItem.id === product.id)
+    // const onAdd = (product) => {
+    //     const productInCart = cart.find(cartItem => cartItem.id === product.id)
 
 
-        if(productInCart) {
-            const game = cart.map((cartItem) => {
-                if(cartItem.id === productInCart.id) {
-                    console.log(productInCart)
-                    productInCart.qty += 1
-                } 
-                return productInCart
-            })
+    //     if(productInCart) {
+    //         const game = cart.map((cartItem) => {
+    //             if(cartItem.id === productInCart.id) {
+    //                 console.log(productInCart)
+    //                 productInCart.qty += 1
+    //             } 
+    //             return productInCart
+    //         })
 
-            setCart(game)
-        } else {
-            setCart([...cart, {...product, qty: 1}])
+    //         setCart(game)
+    //     } else {
+    //         setCart([...cart, {...product, qty: 1}])
         
-        }
-    }
+    //     }
+    // }
 
 
 
