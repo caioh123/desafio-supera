@@ -1,5 +1,5 @@
 import React from 'react'
-import { Text, View, StyleSheet, Image, TextInput, TouchableOpacity, FlatList } from 'react-native'
+import { Text, View, StyleSheet, Image, TouchableOpacity, FlatList } from 'react-native'
 import { Header } from '../components/Header'
 import { Ionicons, EvilIcons, AntDesign } from '@expo/vector-icons';
 import {data} from '../products'
@@ -20,6 +20,7 @@ export const CartPage = () => {
     const totalPrice = itemsPrice + taxPrice
 
     const navigation = useNavigation()
+
 
 
 

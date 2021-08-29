@@ -13,7 +13,6 @@ export const CartProvider = (props) => {
         if(productInCart) {
             const game = cart.map((cartItem) => {
                 if(cartItem.id === productInCart.id) {
-                    console.log(productInCart)
                     productInCart.qty += 1
                 } 
                 return productInCart

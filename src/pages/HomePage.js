@@ -1,13 +1,40 @@
-import React from 'react'
-import {View, Text, StyleSheet, TextInput, Image, FlatList} from 'react-native'
+import React, {useState, useCallback, useEffect} from 'react'
+import {View, Text, StyleSheet, TextInput, Image, FlatList, ScrollView} from 'react-native'
 import { GameCard } from '../components/GameCard'
 import {Header} from '../components/Header'
 import { useGames } from '../context/gameContext'
 
 export const HomePage = ({navigation}) => {
 
-
     const {games} = useGames()
+    const [filteredData, setFilteredData] = useState([])
+
+    const [search, setSearch] = useState("mario");
+
+    useEffect(() => {
+        searchFilter(search)
+    }, [search])
+
+
+    const searchFilter = (text) => {
+        if(text) {
+            const newData = games.filter((item) => {
+                // const itemData = item.name ? item.name.toUpperCase() : "".toUpperCase()
+                
+                // const textData = text.toUpperCase()
+                // return itemData.indexOf(textData) >- 1
+                console.log(text)
+            });
+            setFilteredData(newData)
+            setSearch(text)
+        } else {
+            console.log(text)
+            setFilteredData(games)
+            setSearch(text)
+        }
+    }
+
+
 
     return (
     <>
@@ -15,18 +42,25 @@ export const HomePage = ({navigation}) => {
         <View style={styles.container}>
             <View style={styles.inputContainer}>
             
-            <TextInput textAlign={"center"} placeholder="Buscar seu jogo favorito" style={styles.input} />
+            <TextInput value={search} onChangeText={setSearch} textAlign={"center"} placeholder="Buscar seu jogo favorito" style={styles.input} />
             </View>
             <View>
-
+{/* 
             <FlatList 
-                data={games}
+                data={filteredData ? filteredData : games}
                 keyExtractor={item => String(item.id)}                
                 renderItem={({item}) => (
-                    <GameCard item={item}/>
+                    <GameCard search={search} item={item}/>
 
             )}
-            />
+            /> */}
+
+            <ScrollView>
+
+            {games.filter((dataFiltered) => dataFiltered.name.includes(search)).map((item) => (
+                <GameCard item={item}/>
+            ))}
+            </ScrollView>
 
         </View>
         </View>
@@ -56,5 +90,4 @@ const styles = StyleSheet.create({
         
         
     }
-  });
-  
+})
