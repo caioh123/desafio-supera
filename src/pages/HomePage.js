@@ -9,7 +9,7 @@ export const HomePage = ({navigation}) => {
     const {games} = useGames()
     const [filteredData, setFilteredData] = useState([])
 
-    const [search, setSearch] = useState("mario");
+    const [search, setSearch] = useState("");
 
     useEffect(() => {
         searchFilter(search)

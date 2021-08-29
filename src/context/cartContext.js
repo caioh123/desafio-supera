@@ -10,20 +10,35 @@ export const CartProvider = (props) => {
         const productInCart = cart.find(cartItem => cartItem.id === product.id)
 
 
-        if(productInCart) {
-            const game = cart.map((cartItem) => {
-                if(cartItem.id === productInCart.id) {
-                    productInCart.qty += 1
-                } 
-                return productInCart
-            })
+    //     if(productInCart) {
+    //         const game = cart.map((cartItem) => {
+    //             if(cartItem.id === productInCart.id) {
+    //                 productInCart.qty += 1
+    //             } 
+    //             return productInCart
+    //         })
 
-            setCart(game)
-        } else {
-            setCart([...cart, {...product, qty: 1}])
+    //         setCart(game)
+    //     } else {
+    //         setCart([...cart, {...product, qty: 1}])
         
-        }
+    //     }
+    // }
+
+    if(productInCart) {
+        const game = cart.map((cartItem) => {
+            if(cartItem.id === productInCart.id) {
+                productInCart.qty += 1
+            } 
+            return cartItem
+        })
+
+        setCart(game)
+    } else {
+        setCart([...cart, {...product, qty: 1}])
+    
     }
+}
 
 
     return (
