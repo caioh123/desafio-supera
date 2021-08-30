@@ -8,21 +8,6 @@ export const CartProvider = (props) => {
   const onAdd = (product) => {
     const productInCart = cart.find((cartItem) => cartItem.id === product.id);
 
-    //     if(productInCart) {
-    //         const game = cart.map((cartItem) => {
-    //             if(cartItem.id === productInCart.id) {
-    //                 productInCart.qty += 1
-    //             }
-    //             return productInCart
-    //         })
-
-    //         setCart(game)
-    //     } else {
-    //         setCart([...cart, {...product, qty: 1}])
-
-    //     }
-    // }
-
     if (productInCart) {
       const game = cart.map((cartItem) => {
         if (cartItem.id === productInCart.id) {

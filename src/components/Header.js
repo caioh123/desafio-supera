@@ -1,22 +1,31 @@
 import React from "react";
-import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
-import { AntDesign } from "@expo/vector-icons";
+import { View, Text, StyleSheet, TouchableOpacity, Image } from "react-native";
 import { useNavigation } from "@react-navigation/native";
+import cartIcon from "../../assets/cart-icon.png";
+import { useCart } from "../context/cartContext";
 
 export const Header = () => {
   const navigation = useNavigation();
 
+  const { cart } = useCart();
+
+  const productQty = cart.length;
+
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>GαɱҽSƚσɾҽ</Text>
+      <Text
+        onPress={() => navigation.navigate("HomePage")}
+        style={styles.title}
+      >
+        GαɱҽSƚσɾҽ
+      </Text>
 
       <TouchableOpacity onPress={() => navigation.navigate("CartPage")}>
         <View style={styles.cartContainer}>
-          <View>
-            <Text style={styles.text}>Meu carrinho</Text>
+          <Image style={styles.cartIcon} source={cartIcon} />
+          <View style={styles.cartQty}>
+            <Text style={styles.qty}>{productQty}</Text>
           </View>
-
-          <AntDesign name="shoppingcart" size={40} color="white" />
         </View>
       </TouchableOpacity>
     </View>
@@ -52,5 +61,24 @@ const styles = StyleSheet.create({
   },
   textAmount: {
     color: "white",
+  },
+  cartIcon: {
+    width: 33,
+    height: 25,
+  },
+  cartQty: {
+    fontSize: 14,
+    color: "#333",
+    backgroundColor: "white",
+    borderRadius: 15,
+    width: 15,
+    height: 15,
+    alignItems: "center",
+    justifyContent: "center",
+    marginTop: 20,
+  },
+  qty: {
+    textAlign: "center",
+    color: "black",
   },
 });

@@ -3,19 +3,19 @@ import {
   Text,
   View,
   StyleSheet,
-  Image,
   TouchableOpacity,
   FlatList,
+  Alert,
 } from "react-native";
 import { Header } from "../components/Header";
-import { Ionicons, EvilIcons, AntDesign } from "@expo/vector-icons";
-import { data } from "../products";
+import { Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
-import { CartGameCard } from "../components/CartCameCard";
+import { Game } from "../components/Game";
 import { useCart } from "../context/cartContext";
+import { formatPrice } from "../helpers/priceHelper";
 
 export const CartPage = () => {
-  const { cart } = useCart();
+  const { cart, setCart } = useCart();
 
   const itemsPrice = cart.reduce((acc, curr) => acc + curr.qty * curr.price, 0);
 
@@ -24,6 +24,23 @@ export const CartPage = () => {
   const totalPrice = itemsPrice + taxPrice;
 
   const navigation = useNavigation();
+
+  const handleCheckout = () => {
+    Alert.alert(
+      "Compra concluída com sucesso!",
+      `Você recebeu ${formatPrice(itemsPrice * 0.1)} de cashback`,
+      [
+        {
+          text: "OK",
+          onPress: () => {
+            setCart([]);
+            navigation.navigate("HomePage");
+          },
+        },
+      ],
+      { cancelable: false }
+    );
+  };
 
   return (
     <>
@@ -50,7 +67,7 @@ export const CartPage = () => {
             data={cart}
             keyExtractor={(item) => String(item.id)}
             renderItem={({ item }) => (
-              <CartGameCard itemsPrice={itemsPrice} product={item} />
+              <Game itemsPrice={itemsPrice} product={item} />
             )}
           />
 
@@ -59,10 +76,10 @@ export const CartPage = () => {
             <Text style={styles.priceDesc}>TOTAL</Text>
           </View>
           <View style={styles.priceContainer}>
-            <Text style={styles.priceVal}>R$ {taxPrice.toFixed(2)}</Text>
-            <Text style={styles.priceVal}>R$ {totalPrice.toFixed(2)}</Text>
+            <Text style={styles.priceVal}>{formatPrice(taxPrice)}</Text>
+            <Text style={styles.priceVal}>{formatPrice(totalPrice)}</Text>
           </View>
-          <TouchableOpacity style={styles.btn}>
+          <TouchableOpacity onPress={handleCheckout} style={styles.btn}>
             <Text style={styles.textBtn}>FINALIZAR COMPRA</Text>
           </TouchableOpacity>
         </View>

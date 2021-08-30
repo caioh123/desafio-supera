@@ -1,10 +1,13 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { View, Text, StyleSheet, Image } from "react-native";
-import { Ionicons, EvilIcons, AntDesign } from "@expo/vector-icons";
+import { EvilIcons, AntDesign } from "@expo/vector-icons";
 import { useCart } from "../context/cartContext";
+import { imagePaths } from "../imagesDictionary";
+import { formatPrice } from "../helpers/priceHelper";
 
-export const CartGameCard = ({ product, data, itemsPrice }) => {
+export const Game = ({ product }) => {
   const { cart, setCart, onAdd } = useCart();
+
   const subTotal = product.qty * product.price;
 
   const onRemove = (product) => {
@@ -25,12 +28,10 @@ export const CartGameCard = ({ product, data, itemsPrice }) => {
 
   return (
     <View style={styles.cardMain}>
-      <Image style={styles.gameImg} source={product.image} />
+      <Image style={styles.gameImg} source={imagePaths[product.imageKey]} />
       <View style={styles.gameContainer} alignItems={"center"}>
-        <Text numberOfLines={2} style={styles.gameName}>
-          {product.name}
-        </Text>
-        <Text style={styles.gamePrice}>R$ {subTotal}</Text>
+        <Text style={styles.gameName}>{product.name}</Text>
+        <Text style={styles.gamePrice}>{formatPrice(subTotal)}</Text>
       </View>
       <View style={styles.cardQty}>
         <AntDesign
@@ -39,7 +40,7 @@ export const CartGameCard = ({ product, data, itemsPrice }) => {
           size={20}
           color="rgb(173,58,16)"
         />
-        <Text style={{ fontSize: 20, paddingLeft: 5 }}>{product.qty}</Text>
+        <Text style={{ fontSize: 16, paddingLeft: 5 }}>{product.qty}</Text>
         <EvilIcons
           onPress={() => onAdd(product)}
           name="plus"
@@ -76,8 +77,7 @@ const styles = StyleSheet.create({
   gameName: {
     color: "black",
     fontSize: 15,
-    height: 30,
-    maxWidth: 300,
+    maxWidth: 150,
   },
   gamePrice: {
     fontWeight: "bold",

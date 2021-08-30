@@ -1,5 +1,5 @@
 import React, { createContext, useState, useContext, useEffect } from "react";
-import { data } from "../products";
+import jsonData from "../products.json";
 
 export const GameContext = createContext({});
 
@@ -9,7 +9,12 @@ export const GamesProvider = (props) => {
   const [games, setGames] = useState([]);
 
   useEffect(() => {
-    setGames(data);
+    const products = jsonData.map((product) => {
+      const imageKey = product.image.replace(/[-]/g, "_").split(".")[0];
+
+      return { ...product, imageKey };
+    });
+    setGames(products);
   }, []);
 
   return (

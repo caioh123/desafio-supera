@@ -1,15 +1,9 @@
-import React, { useState, useEffect } from "react";
-import {
-  ScrollView,
-  Text,
-  StyleSheet,
-  View,
-  Image,
-  TouchableOpacity,
-} from "react-native";
+import React from "react";
+import { Text, StyleSheet, View, Image, TouchableOpacity } from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useCart } from "../context/cartContext";
+import { imagePaths } from "../imagesDictionary";
+import { formatPrice } from "../helpers/priceHelper";
 
 export const GameCard = ({ item }) => {
   const { cart, setCart, onAdd } = useCart();
@@ -29,13 +23,21 @@ export const GameCard = ({ item }) => {
     <>
       <View style={styles.container}>
         <View>
-          <Image onpr alignSelf={"center"} source={item.image} />
+          <Image alignSelf={"center"} source={imagePaths[item.imageKey]} />
           <Text style={styles.gameName}>{item.name}</Text>
-          <Text style={styles.gamePrice}>R$ {item.price}</Text>
+          <View style={styles.resultContainer}>
+            <Text style={styles.gamePrice}>{formatPrice(item.price)}</Text>
+            <View style={{ alignItems: "center" }}>
+              <Text style={styles.pop}>Popularidade</Text>
+              <Text style={[styles.pop, { fontWeight: "normal" }]}>
+                {item.score}
+              </Text>
+            </View>
+          </View>
+
           <TouchableOpacity onPress={() => onAdd(item)} style={styles.btn}>
             <View style={{ flexDirection: "row" }}>
               <FontAwesome
-                onpr
                 style={{ paddingLeft: 10 }}
                 name="cart-plus"
                 size={24}
@@ -100,6 +102,16 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     color: "black",
     fontSize: 21,
-    marginTop: 10,
+  },
+  resultContainer: {
+    justifyContent: "space-between",
+    flexDirection: "row",
+    height: 60,
+    alignItems: "center",
+  },
+  pop: {
+    fontWeight: "bold",
+    color: "black",
+    fontSize: 17,
   },
 });

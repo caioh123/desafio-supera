@@ -1,31 +1,37 @@
-import React, { useState, useCallback, useEffect } from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  TextInput,
-  Image,
-  FlatList,
-  ScrollView,
-} from "react-native";
+import React, { useState } from "react";
+import { View, StyleSheet, TextInput, FlatList } from "react-native";
 import { GameCard } from "../components/GameCard";
 import { Header } from "../components/Header";
 import { useGames } from "../context/gameContext";
 import { Picker } from "@react-native-picker/picker";
 
-export const HomePage = ({ navigation }) => {
+export const HomePage = () => {
   const { games } = useGames();
-  const [selectedFilter, setSelectedFilter] = useState("price");
+  const [selectedFilter, setSelectedFilter] = useState("name");
 
   const [search, setSearch] = useState("");
 
-  const ItemsToShow = games.filter(() => {
+  const handleOrderGames = () => {
+    if (!games.length) {
+      return [];
+    }
+
     if (selectedFilter === "price") {
-      return games.sort((a, b) => b.price - a.price);
-    } else {
+      return games.sort((a, b) => a.price - b.price);
+    }
+    if (selectedFilter === "pop") {
       return games.sort((a, b) => b.score - a.score);
     }
-  });
+    return games.sort((a, b) => a.name.localeCompare(b.name));
+  };
+
+  const orderedGames = handleOrderGames();
+
+  const name = search.toLowerCase();
+
+  const gamesToShow = orderedGames.filter((game) =>
+    game.name.toLowerCase().includes(name)
+  );
 
   return (
     <>
@@ -35,12 +41,11 @@ export const HomePage = ({ navigation }) => {
           <Picker
             style={[styles.inputContainer, { width: "40%" }]}
             selectedValue={selectedFilter}
-            onValueChange={(itemValue, itemIndex) =>
-              setSelectedFilter(itemValue)
-            }
+            onValueChange={(itemValue) => setSelectedFilter(itemValue)}
           >
-            <Picker.Item label="Popularidade" value="pop" />
+            <Picker.Item label="Alfabético" value="name" />
             <Picker.Item label="Preço" value="price" />
+            <Picker.Item label="Popularidade" value="pop" />
           </Picker>
           <View style={styles.inputContainer}>
             <TextInput
@@ -54,25 +59,11 @@ export const HomePage = ({ navigation }) => {
         </View>
 
         <View>
-          {/* 
-            <FlatList 
-                data={filteredData ? filteredData : games}
-                keyExtractor={item => String(item.id)}                
-                renderItem={({item}) => (
-                    <GameCard search={search} item={item}/>
-
-            )}
-            /> */}
-
-          <ScrollView>
-            {search
-              ? games
-                  .filter((dataFiltered) => dataFiltered.name.includes(search))
-                  .map((item, index) => <GameCard key={index} item={item} />)
-              : ItemsToShow.map((item, index) => (
-                  <GameCard key={index} item={item} />
-                ))}
-          </ScrollView>
+          <FlatList
+            data={gamesToShow}
+            keyExtractor={(item) => String(item.id)}
+            renderItem={({ item }) => <GameCard item={item} />}
+          />
         </View>
       </View>
     </>
@@ -84,6 +75,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     backgroundColor: "rgb(25,25,32)",
+    paddingBottom: 100,
   },
   input: {
     color: "rgba(0, 0, 0, 0.5)",
@@ -93,12 +85,13 @@ const styles = StyleSheet.create({
     width: "100%",
     justifyContent: "space-between",
     flexDirection: "row",
+    padding: 20,
+    alignItems: "center",
   },
   inputContainer: {
     backgroundColor: "white",
     marginTop: 20,
     borderWidth: 1,
-    borderRadius: 6,
     height: 50,
     width: "50%",
     paddingTop: 8,
